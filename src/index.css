@@ -1,0 +1,18 @@
+.border {
+    width: 896px;
+    height: 175px;
+    border: 1px solid #d0d7d1;
+    position: relative
+}
+
+/* #calendar {
+    width: 896px;
+    height: 175px;
+} */
+
+
+.ContributionCalendar-day {
+    fill: #40c463;
+    shape-rendering: geometricPrecision;
+    border-radius: 2px;
+}
