@@ -1,0 +1,20 @@
+{
+  "name": "github-calendar",
+  "version": "1.0.0",
+  "description": "仿 github 日历色块",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GYtide/github-calendar.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GYtide/github-calendar/issues"
+  },
+  "homepage": "https://github.com/GYtide/github-calendar#readme"
+}
