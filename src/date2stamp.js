@@ -127,48 +127,10 @@ const stamp2date = function (daystamp) {
     while (true) {
         if (isLeapYear(year)) {
             if (day < 367) {
-
                 while (true) {
                     if (month == 2) {
-                        if (month > 29) {
+                        if (day > 29) {
                             day -= 29
-                        }
-                        else {
-                            break
-                        }
-                    }
-                    else if (month == 4 || month == 6 || month == 9 || month == 30) {
-                        if (month > 30) {
-                            day -= 30
-                        }
-                        else {
-                            break
-                        }
-                    }
-                    else {
-                        if (month > 31) {
-                            day -= 31
-                        }
-                        else {
-                            break
-                        }
-                    }
-                    month +=1
-              
-                }
-
-                break
-            }
-            day -= 366
-            year += 1
-        }
-        else {
-            
-            if (day < 366) {
-                while (true) {
-                    if (month == 2) {
-                        if (day > 28) {
-                            day -= 28
                         }
                         else {
                             break
@@ -190,8 +152,45 @@ const stamp2date = function (daystamp) {
                             break
                         }
                     }
-                    month +=1
-              
+                    month += 1
+
+                }
+
+                break
+            }
+            day -= 366
+            year += 1
+        }
+        else {
+
+            if (day < 366) {
+                while (true) {
+                    if (month == 2) {
+                        if (day > 28) {
+                            day -= 28
+                        }
+                        else {
+                            break
+                        }
+                    }
+                    else if (month == 4 || month == 6 || month == 9 || month == 11) {
+                        if (day > 30) {
+                            day -= 30
+                        }
+                        else {
+                            break
+                        }
+                    }
+                    else {
+                        if (day > 31) {
+                            day -= 31
+                        }
+                        else {
+                            break
+                        }
+                    }
+                    month += 1
+
                 }
 
                 break
@@ -200,7 +199,6 @@ const stamp2date = function (daystamp) {
             year += 1
         }
     }
-
 
     return {
         year: year,

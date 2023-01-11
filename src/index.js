@@ -3,35 +3,11 @@ import { date2stamp, stamp2date } from "./date2stamp.js";
 
 var dateb = document.getElementById('dateb')
 var datee = document.getElementById('datee')
-
-
-dateb.oninput = datee.oninput = dateb.onchange = datee.onchange =
-    function () {
-        console.log(dateb.value, datee.value)
-        let datebegin = dateb.valueAsNumber
-        let dateend = datee.valueAsNumber
-        var datelist = getdatelist(
-            {
-                value: dateb.value,
-                valueAsNumber: dateb.valueAsNumber
-
-            },
-            {
-                value: datee.value,
-                valueAsNumber: datee.valueAsNumber
-
-            })
-        if (dateend <= datebegin || !datebegin) {
-            datebegin = dateend - 1000 * 3600 * 10 * 24
-            dateb.valueAsNumber = dateend - 1000 * 3600 * 10 * 24
-        }
-        initRect(datelist)
-    }
-
 var svg = document.getElementById('svg')
 
-let datebegin = dateb.valueAsNumber
-let dateend = datee.valueAsNumber
+var datebegin = dateb.valueAsNumber
+var dateend = datee.valueAsNumber
+
 if (dateend <= datebegin || !datebegin) {
     datebegin = dateend - 1000 * 3600 * 10 * 24
     dateb.valueAsNumber = dateend - 1000 * 3600 * 10 * 24
@@ -51,6 +27,31 @@ let datelist = getdatelist(
 
 initRect(datelist)
 
+var refresh = function(){
+    let datebegin = dateb.valueAsNumber
+    let dateend = datee.valueAsNumber
+    if (dateend <= datebegin || !datebegin) {
+        datebegin = dateend - 1000 * 3600 * 10 * 24
+        dateb.valueAsNumber = dateend - 1000 * 3600 * 10 * 24
+    }
+
+    var datelist = getdatelist(
+        {
+            value: dateb.value,
+            valueAsNumber: dateb.valueAsNumber
+
+        },
+        {
+            value: datee.value,
+            valueAsNumber: datee.valueAsNumber
+
+        })
+        clearRect()
+        initRect(datelist)
+    
+}
+
+document.getElementById('enter').addEventListener('click',refresh)
 
 function getdatelist(begin, end) {
 
@@ -69,7 +70,6 @@ function getdatelist(begin, end) {
         day: parseInt(end.value.split('-')[2]),
         week: getweek(end.valueAsNumber)
     }
-    console.log(begind, endd)
     let listbegin = {
         daystamp: date2stamp(`${begind.year}-01-01`),
         year: begind.year,
@@ -84,7 +84,6 @@ function getdatelist(begin, end) {
         day: 31,
         week: getweek(`${endd.year}-12-31`)
     }
-    console.log(listbegin, listend)
 
     var datelist = []
 
@@ -92,9 +91,7 @@ function getdatelist(begin, end) {
         year : listbegin.year,
         list : []
     }
-    console.log(newlist)
     datelist.unshift(newlist)
-    console.log(datelist)
 
     for (let i = listbegin.daystamp; i <= listend.daystamp; ++i) {
 
@@ -131,16 +128,34 @@ function getdatelist(begin, end) {
 }
 
 
+
 function initRect(datelist) {
 
+    var g1 = document.createElementNS('http://www.w3.org/2000/svg', 'g')
+    g1.setAttribute("transform", `translate(15, 20)`)
 
+    svg.appendChild(g1)
 
-    for (let i = 0; i < 52; ++i) {
+    let posi = 0
+    let monlabellist = [' ','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+    let mnum = 0
+   
+    for(let i = 0 ; i <datelist[0].list.length ;){
         var g = document.createElementNS('http://www.w3.org/2000/svg', 'g')
-        let posi = i * 16
-        // g.transform=`translate(${posi}, 0)`
+
         g.setAttribute("transform", `translate(${posi}, 0)`)
-        for (let j = 0; j < 7; ++j) {
+        if(mnum != datelist[0].list[i].month){
+            mnum +=1
+            var mlabel = document.createElementNS('http://www.w3.org/2000/svg', 'text')
+            mlabel.setAttribute("class","ContributionCalendar-label")
+            mlabel.setAttribute("x",`${posi+16}`)
+            mlabel.setAttribute("y",-8)
+            mlabel.textContent = monlabellist[mnum]
+            g1.appendChild(mlabel)
+        }
+
+        for (let j = datelist[0].list[i].week; j < 7 && i < datelist[0].list.length; ++j,++i) {
+
             var r1 = document.createElementNS('http://www.w3.org/2000/svg', 'rect')
             r1.setAttribute("width", 11)
             r1.setAttribute("height", 11)
@@ -149,20 +164,23 @@ function initRect(datelist) {
             r1.setAttribute("rx", 2)
             r1.setAttribute("ry", 2)
             r1.setAttribute("class", "ContributionCalendar-day rect")
-            r1.setAttribute("data-level", 2)
+            r1.setAttribute("data-level", `${datelist[0].list[i].value}`)
             r1.setAttribute("data-descr", 'asdasd')
             r1.onmouseover = showtip
             r1.onmouseout = function () {
                 let tip = document.getElementsByClassName('svg-tip')
                 tip[0].hidden = "true"
             }
-            r1.textContent = `${i},${j}`
+            r1.textContent = `${datelist[0].list[i].year}年 ${datelist[0].list[i].month}月 ${datelist[0].list[i].day}日 ${datelist[0].list[i].value}`
             g.appendChild(r1)
+        
         }
-        svg.appendChild(g)
+        g1.appendChild(g)
+        posi += 16
     }
 
-    // 2 contributions on December 17, 2022
+
+
 
     function showtip(a) {
         let b = a.target
@@ -179,6 +197,11 @@ function initRect(datelist) {
         tip.style.left = `${d}px`
         tip.textContent = b.textContent
     }
+}
+
+function clearRect(){
+    // svg.selectAll ("*").remove ();
+    svg.textContent = ''
 }
 
 
@@ -203,6 +226,8 @@ function initRect(datelist) {
 //             o.classList.remove("left"), o.classList.remove("right")
 //     )
 // }
+
+
 
 
 
