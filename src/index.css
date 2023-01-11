@@ -1,13 +1,96 @@
-.border {
-    width: 896px;
-    height: 175px;
-    border: 1px solid #d0d7d1;
-    position: relative
+.calendar {
+    /* width: 896px; */
+    height: auto;
+    position: fixed;
+    text-align: center;
+    top: 20%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-/* #calendar {
-    width: 896px;
-    height: 175px;
+.border {
+    border-radius: 7px;
+    width: 1000px;
+    height: auto;
+    border: 1px solid #d0d7d1;
+    text-align: center;
+    margin: 10px;
+    position: absolute;
+    /* left: 50%;
+    top: 50%;
+    transform: translate( -50%, -50%); */
+}
+
+
+.inputpannel {
+    margin: 10px;
+    padding: 2px;
+
+}
+
+.rectlist {
+    margin: 10px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+svg {
+    width: 100%;
+    margin: 10px;
+}
+
+.svg-tip {
+    position: absolute;
+    z-index: 99999;
+    padding: 8px 16px;
+    font-size: 12px;
+    color: #FFF;
+    text-align: center;
+    background: #000000;
+    border-radius: 6px;
+}
+
+.svg-tip::after {
+
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    box-sizing: border-box;
+    margin: 0 0 0 -4px;
+    content: " ";
+    border: 5px solid transparent;
+    border-top-color: transparent;
+    border-top-color: #000000;
+
+}
+
+
+/* .rect[data-descr] {
+    position: relative;
+    text-decoration: underline;
+    color: #00F; 
+    cursor: help;
+}*/
+
+/* .rect[data-descr]:hover::after {
+    content: attr(data-descr);
+    position: absolute;
+    left: 0;
+    top: 24px;
+    min-width: 200px;
+    border: 1px #aaaaaa solid;
+    border-radius: 10px;
+    background-color: #ffffcc;
+    padding: 12px;
+    color: #000000;
+    font-size: 14px;
+    z-index: 1;
 } */
 
 

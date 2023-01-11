@@ -11,18 +11,29 @@
     <link href="./index.css" rel="stylesheet">
 </head>
 
-
-
 <body>
-    <div class="border">
-        <div>
-            <svg id = "svg" width="823" height="128">
-            
-            </svg>
+    <div class="calendar">
+        <div class="border">
+            <div class="inputpannel">
+                <label>
+                </label>
+                <label>date begin:</label>
+                <input id='dateb' type="date" style="margin-right: 30px;" min="1970-01-01" >
+                <label style="margin-left: 30px;">date end:</label>
+                <input id='datee' type="date" value="2023-01-01">
+            </div>
+            <div class="rectlist">
+                <svg id="svg">
+                </svg>
+            </div>
         </div>
+    </div>
+    <div  class="svg-tip" hidden="" style="pointer-events: none;"  >
+            asdasf
     </div>
 
 </body>
 <script type="module" src="index.js">
 </script>
+
 </html>

@@ -6,19 +6,19 @@
  * 根据日期字符串转换为对应时间戳
  */
 const date2stamp = function (datastr) {
-    
+
     /**
      * 
      * @param year 
      * 
      * 判断是否是闰年
      */
-    function isLeapYear(year){
+    function isLeapYear(year) {
         // if(year)
-        if(year%4 ==0  && year%100 !=0 || year%400 == 0){
+        if (year % 4 == 0 && year % 100 != 0 || year % 400 == 0) {
             return true
         }
-        else{
+        else {
             return false
         }
     }
@@ -44,19 +44,19 @@ const date2stamp = function (datastr) {
             return null
         }
         else if ((month == 1 || month == 3 || month == 5
-            || month == 7 || month == 8 || month == 10 
-            || month == 12) && day  > 31) {
+            || month == 7 || month == 8 || month == 10
+            || month == 12) && day > 31) {
             return null
         }
-        else if((month == 4 || month == 6 || month == 9
-            || month == 11 ) && day  > 30){
+        else if ((month == 4 || month == 6 || month == 9
+            || month == 11) && day > 30) {
             return null
 
         }
-        else if(month == 2 && isLeapYear(year) && day > 29){
+        else if (month == 2 && isLeapYear(year) && day > 29) {
             return null
         }
-        else if(month == 2 && !isLeapYear(year) && day > 28){
+        else if (month == 2 && !isLeapYear(year) && day > 28) {
             return null
         }
 
@@ -64,27 +64,27 @@ const date2stamp = function (datastr) {
 
         let daystamp = 0
 
-        for(let i = 1970 ; i < year ;++i ){
-            if(isLeapYear(i)){
+        for (let i = 1970; i < year; ++i) {
+            if (isLeapYear(i)) {
                 daystamp += 366
             }
-            else{
-                daystamp +=365
+            else {
+                daystamp += 365
             }
         }
 
-        for(let i = 1 ; i < month ; ++i){
-            if(i == 4 || i == 6 || i == 9 || i ==11){
+        for (let i = 1; i < month; ++i) {
+            if (i == 4 || i == 6 || i == 9 || i == 11) {
                 daystamp += 30
             }
-            else if(i == 2){
-                if(isLeapYear(year)){
+            else if (i == 2) {
+                if (isLeapYear(year)) {
                     daystamp += 29
-                }else{
+                } else {
                     daystamp += 28
                 }
             }
-            else{
+            else {
                 daystamp += 31
             }
 
@@ -98,5 +98,118 @@ const date2stamp = function (datastr) {
 
 }
 
+const stamp2date = function (daystamp) {
 
-export{ date2stamp }
+    /**
+   * 
+   * @param year 
+   * 
+   * 判断是否是闰年
+   */
+    function isLeapYear(year) {
+        // if(year)
+        if (year % 4 == 0 && year % 100 != 0 || year % 400 == 0) {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+
+
+
+    let year = 1970
+
+    let day = daystamp
+
+    let month = 1;
+
+    while (true) {
+        if (isLeapYear(year)) {
+            if (day < 367) {
+
+                while (true) {
+                    if (month == 2) {
+                        if (month > 29) {
+                            day -= 29
+                        }
+                        else {
+                            break
+                        }
+                    }
+                    else if (month == 4 || month == 6 || month == 9 || month == 30) {
+                        if (month > 30) {
+                            day -= 30
+                        }
+                        else {
+                            break
+                        }
+                    }
+                    else {
+                        if (month > 31) {
+                            day -= 31
+                        }
+                        else {
+                            break
+                        }
+                    }
+                    month +=1
+              
+                }
+
+                break
+            }
+            day -= 366
+            year += 1
+        }
+        else {
+            
+            if (day < 366) {
+                while (true) {
+                    if (month == 2) {
+                        if (day > 28) {
+                            day -= 28
+                        }
+                        else {
+                            break
+                        }
+                    }
+                    else if (month == 4 || month == 6 || month == 9 || month == 30) {
+                        if (day > 30) {
+                            day -= 30
+                        }
+                        else {
+                            break
+                        }
+                    }
+                    else {
+                        if (day > 31) {
+                            day -= 31
+                        }
+                        else {
+                            break
+                        }
+                    }
+                    month +=1
+              
+                }
+
+                break
+            }
+            day -= 365
+            year += 1
+        }
+    }
+
+
+    return {
+        year: year,
+        month: month,
+        day: day
+    }
+
+}
+
+
+
+export { date2stamp, stamp2date }
