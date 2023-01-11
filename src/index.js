@@ -88,15 +88,18 @@ function getdatelist(begin, end) {
 
     var datelist = []
 
-    let y = 0
-    datelist[y] = []
-    datelist[y].year = listbegin.year
-    datelist[y].list = []
+    var newlist = {
+        year : listbegin.year,
+        list : []
+    }
+    console.log(newlist)
+    datelist.unshift(newlist)
+    console.log(datelist)
 
     for (let i = listbegin.daystamp; i <= listend.daystamp; ++i) {
 
-        if (stamp2date(i).year == datelist[y].year) {
-            datelist[y].list.push({
+        if (stamp2date(i).year == newlist.year) {
+            newlist.list.push({
                 daystamp: i,
                 year: stamp2date(i).year,
                 month: stamp2date(i).month,
@@ -106,11 +109,13 @@ function getdatelist(begin, end) {
             })
         }
         else {
-            y += 1
-            datelist[y] = []
-            datelist[y].year = stamp2date(i).year
-            datelist[y].list = []
-            datelist[y].list.push({
+            newlist = {
+                year : stamp2date(i).year,
+                list : []
+            }
+            datelist.unshift(newlist)
+        
+            newlist.list.push({
                 daystamp: i,
                 year: stamp2date(i).year,
                 month: stamp2date(i).month,
@@ -121,7 +126,6 @@ function getdatelist(begin, end) {
         }
 
     }
-    console.log(datelist)
     return datelist
 
 }
@@ -129,7 +133,7 @@ function getdatelist(begin, end) {
 
 function initRect(datelist) {
 
-    
+
 
     for (let i = 0; i < 52; ++i) {
         var g = document.createElementNS('http://www.w3.org/2000/svg', 'g')
