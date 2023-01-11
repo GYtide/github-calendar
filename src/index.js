@@ -27,7 +27,7 @@ let datelist = getdatelist(
 
 initRect(datelist)
 
-var refresh = function(){
+var refresh = function () {
     let datebegin = dateb.valueAsNumber
     let dateend = datee.valueAsNumber
     if (dateend <= datebegin || !datebegin) {
@@ -46,12 +46,12 @@ var refresh = function(){
             valueAsNumber: datee.valueAsNumber
 
         })
-        clearRect()
-        initRect(datelist)
-    
+    clearRect()
+    initRect(datelist)
+
 }
 
-document.getElementById('enter').addEventListener('click',refresh)
+document.getElementById('enter').addEventListener('click', refresh)
 
 function getdatelist(begin, end) {
 
@@ -88,8 +88,8 @@ function getdatelist(begin, end) {
     var datelist = []
 
     var newlist = {
-        year : listbegin.year,
-        list : []
+        year: listbegin.year,
+        list: []
     }
     datelist.unshift(newlist)
 
@@ -107,11 +107,11 @@ function getdatelist(begin, end) {
         }
         else {
             newlist = {
-                year : stamp2date(i).year,
-                list : []
+                year: stamp2date(i).year,
+                list: []
             }
             datelist.unshift(newlist)
-        
+
             newlist.list.push({
                 daystamp: i,
                 year: stamp2date(i).year,
@@ -137,24 +137,43 @@ function initRect(datelist) {
     svg.appendChild(g1)
 
     let posi = 0
-    let monlabellist = [' ','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+    let monlabellist = [' ', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
     let mnum = 0
-   
-    for(let i = 0 ; i <datelist[0].list.length ;){
+
+    var wlabel1 = document.createElementNS('http://www.w3.org/2000/svg', 'text')
+    wlabel1.setAttribute("class", "ContributionCalendar-label")
+    wlabel1.setAttribute("dx", -15)
+    wlabel1.setAttribute("dy", 24)
+    wlabel1.textContent = 'Mon'
+    g1.appendChild(wlabel1)
+    var wlabel3 = document.createElementNS('http://www.w3.org/2000/svg', 'text')
+    wlabel3.setAttribute("class", "ContributionCalendar-label")
+    wlabel3.setAttribute("dx", -15)
+    wlabel3.setAttribute("dy", 54)
+    wlabel3.textContent = 'Wed'
+    g1.appendChild(wlabel3)
+    var wlabel5 = document.createElementNS('http://www.w3.org/2000/svg', 'text')
+    wlabel5.setAttribute("class", "ContributionCalendar-label")
+    wlabel5.setAttribute("dx", -15)
+    wlabel5.setAttribute("dy",  84)
+    wlabel5.textContent = 'Fri'
+    g1.appendChild(wlabel5)
+
+    for (let i = 0; i < datelist[0].list.length;) {
         var g = document.createElementNS('http://www.w3.org/2000/svg', 'g')
 
         g.setAttribute("transform", `translate(${posi}, 0)`)
-        if(mnum != datelist[0].list[i].month){
-            mnum +=1
+        if (mnum != datelist[0].list[i].month) {
+            mnum += 1
             var mlabel = document.createElementNS('http://www.w3.org/2000/svg', 'text')
-            mlabel.setAttribute("class","ContributionCalendar-label")
-            mlabel.setAttribute("x",`${posi+16}`)
-            mlabel.setAttribute("y",-8)
+            mlabel.setAttribute("class", "ContributionCalendar-label")
+            mlabel.setAttribute("x", `${posi + 16}`)
+            mlabel.setAttribute("y", -8)
             mlabel.textContent = monlabellist[mnum]
             g1.appendChild(mlabel)
         }
 
-        for (let j = datelist[0].list[i].week; j < 7 && i < datelist[0].list.length; ++j,++i) {
+        for (let j = datelist[0].list[i].week; j < 7 && i < datelist[0].list.length; ++j, ++i) {
 
             var r1 = document.createElementNS('http://www.w3.org/2000/svg', 'rect')
             r1.setAttribute("width", 11)
@@ -173,7 +192,7 @@ function initRect(datelist) {
             }
             r1.textContent = `${datelist[0].list[i].year}年 ${datelist[0].list[i].month}月 ${datelist[0].list[i].day}日 ${datelist[0].list[i].value}`
             g.appendChild(r1)
-        
+
         }
         g1.appendChild(g)
         posi += 16
@@ -199,7 +218,7 @@ function initRect(datelist) {
     }
 }
 
-function clearRect(){
+function clearRect() {
     // svg.selectAll ("*").remove ();
     svg.textContent = ''
 }
