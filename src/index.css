@@ -1,3 +1,28 @@
+/*
+*  设置滚动条样式 
+*/
+
+/* 设置滚动条的样式 */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+/* 滚动槽 */
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.2);
+    border-radius: 8px;
+}
+/* 滚动条滑块 */
+::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background: rgb(216, 233, 255);
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.25);
+}
+/* 非激活窗口 */
+::-webkit-scrollbar-thumb:window-inactive {
+    background: rgba(216, 233, 255);
+}
+
 .mt{
     height: auto;
     position: fixed;
@@ -17,17 +42,18 @@
     height: auto;
     text-align: center;
     /* top: 20%; */
-    width: 80%;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .content {
-    height: auto;
+    height: 500px;
     text-align: center;
+    /* position: fixed; */
     /* top: 47%; */
-    width: 80%;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -45,6 +71,20 @@
     top: 50%;
     transform: translate( -50%, -50%); */
 }
+
+.cborder {
+    border-radius: 7px;
+    width: 940px;
+    height: 500px;
+    border: 1px solid #d0d7d1;
+    text-align: center;
+    margin: 10px;
+    /* position: absolute; */
+    /* left: 50%;
+    top: 50%;
+    transform: translate( -50%, -50%); */
+}
+
 
 
 .inputpannel {
@@ -175,4 +215,9 @@
     fill: #30a14e;
     shape-rendering: geometricPrecision;
     border-radius: 2px;
+}
+
+
+.json-panels{
+
 }

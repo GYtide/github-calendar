@@ -19,11 +19,10 @@
                     <label>
                     </label>
                     <label>date begin:</label>
-                    <input id='dateb' type="date" style="margin-right: 30px;" disabled value="2020-01-01">
+                    <input id='dateb' type="date" style="margin-right: 30px;" value="2020-01-01">
                     <label style="margin-left: 30px;">date end:</label>
-                    <input id='datee' type="date" disabled value="2023-12-31">
+                    <input id='datee' type="date" value="2023-12-31">
                     <button id='enter' style="margin-left: 40px;">确认</button>
-                    <a href="./datepreview.json">数据json文件</a>
                 </div>
                 <div class="rectlist">
                     <svg id="calsvg">
@@ -62,13 +61,19 @@
             </div>
         </div>
         <div class="content">
-            <div class="cborder">
+            <div class="border">
                 <div style="float: right; width: 16%; text-align: left;">
                     <ul id="yearlist" class="yearlist">
+                        <li>
+                            <a class="year-item" id="year-link-2023">2023</a>
+                        </li>
+                        <li>
+                            <a class="year-item" id="year-link-2022">2022</a>
+                        </li>
+                        <li>
+                            <a class="year-item" id="year-link-2021">2021</a>
+                        </li>
                     </ul>
-                </div>
-                <div >
-
                 </div>
             </div>
 
@@ -80,7 +85,7 @@
     </div>
 
 </body>
-<script type="module" src="index.js">
+<script type="module" src="index1.js">
 </script>
 
 </html>

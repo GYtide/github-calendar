@@ -13,50 +13,7 @@ if (dateend <= datebegin || !datebegin) {
     dateb.valueAsNumber = dateend - 1000 * 3600 * 10 * 24
 }
 
-var datelist = getdatelist(
-    {
-        value: dateb.value,
-        valueAsNumber: dateb.valueAsNumber
-
-    },
-    {
-        value: datee.value,
-        valueAsNumber: datee.valueAsNumber
-
-    })
-// 生成年份列表
-
-document.getElementById('yearlist').textContent = ''
-
-for (let i = 0; i < datelist.length; ++i) {
-    var li = document.createElement('li')
-    var a = document.createElement('a')
-    a.setAttribute("class", "year-item")
-    a.class = "year-item"
-    a.id = "year-link-2023"
-    a.yindex =  i
-    a.textContent = datelist[i].year
-    a.onclick = function () {
-        let items = document.getElementsByClassName('year-item')
-
-        for (let i = 0; i < items.length; ++i) {
-            // console.log(items[0])
-            items[i].style = "background-color: #FFFFFF;"
-        }
-
-        this.style = "background-color: #0969da;"
-        clearRect()
-        initRect(datelist[this.yindex])
-    }
- 
-    li.appendChild(a)
-    document.getElementById('yearlist').appendChild(li)
-}
-
-
-document.getElementsByClassName('year-item')[0].style = "background-color: #0969da;"
-
-initRect(datelist[0])
+var datelist = []
 
 
 var refresh = function () {
@@ -67,122 +24,79 @@ var refresh = function () {
         dateb.valueAsNumber = dateend - 1000 * 3600 * 10 * 24
     }
 
-    datelist = getdatelist(
-        {
-            value: dateb.value,
-            valueAsNumber: dateb.valueAsNumber
+    datelist = getdatelist()
 
-        },
-        {
-            value: datee.value,
-            valueAsNumber: datee.valueAsNumber
+    datelist.then(
+         res => {
+            document.getElementById('yearlist').textContent = ''
 
-        })
-    document.getElementById('yearlist').textContent = ''
-
-    for (let i = 0; i < datelist.length; ++i) {
-        var li = document.createElement('li')
-        var a = document.createElement('a')
-        a.setAttribute("class", "year-item")
-        a.class = "year-item"
-        a.id = "year-link-2023"
-        a.yindex =  i
-        a.textContent = datelist[i].year
-        a.onclick = function () {
-
-            let items = document.getElementsByClassName('year-item')
-
-            for (let i = 0; i < items.length; ++i) {
-                // console.log(items[0])
-                items[i].style = "background-color: #FFFFFF;"
+            for (let i = 0; i < res.length; ++i) {
+                var li = document.createElement('li')
+                var a = document.createElement('a')
+                a.setAttribute("class", "year-item")
+                a.class = "year-item"
+                a.id = "year-link-2023"
+                a.yindex = i
+                a.textContent = res[i].year
+                a.onclick = function () {
+        
+                    let items = document.getElementsByClassName('year-item')
+        
+                    for (let i = 0; i < items.length; ++i) {
+                        // console.log(items[0])
+                        items[i].style = "background-color: #FFFFFF;"
+                    }
+        
+                    this.style = "background-color: #0969da;"
+                    clearRect()
+                    initRect(res[this.yindex])
+        
+                }
+                li.appendChild(a)
+                document.getElementById('yearlist').appendChild(li)
             }
-
-            this.style = "background-color: #0969da;"
             clearRect()
-            initRect(datelist[this.yindex])
-
+            initRect(res[0])
         }
-        li.appendChild(a)
-        document.getElementById('yearlist').appendChild(li)
-    }
-    clearRect()
-    initRect(datelist[0])
+    )
+    
 
 }
 
 document.getElementById('enter').addEventListener('click', refresh)
 
-function getdatelist(begin, end) {
 
-    console.log(begin,end)
-    let begind = {
-        daystamp: begin.valueAsNumber / 1000 / 3600 / 24 + 1,
-        year: parseInt(begin.value.split('-')[0]),
-        month: parseInt(begin.value.split('-')[1]),
-        day: parseInt(begin.value.split('-')[2]),
-        week: getweek(begin.valueAsNumber)
-    }
-    let endd = {
-        daystamp: end.valueAsNumber / 1000 / 3600 / 24 + 1,
-        year: parseInt(end.value.split('-')[0]),
-        month: parseInt(end.value.split('-')[1]),
-        day: parseInt(end.value.split('-')[2]),
-        week: getweek(end.valueAsNumber)
-    }
-    let listbegin = {
-        daystamp: date2stamp(`${begind.year}-01-01`),
-        year: begind.year,
-        month: 1,
-        day: 1,
-        week: getweek(`${begind.year}-01-01`)
-    }
-    let listend = {
-        daystamp: date2stamp(`${endd.year}-12-31`),
-        year: endd.year,
-        month: 12,
-        day: 31,
-        week: getweek(`${endd.year}-12-31`)
-    }
 
-    var datelist = []
+// refer https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API/Using_Fetch
+// Example POST method implementation:
+// async function postData(url = '', data = {}) {
+//     // Default options are marked with *
+//     const response = await fetch(url, {
+//         method: 'POST', // *GET, POST, PUT, DELETE, etc.
+//         mode: 'cors', // no-cors, *cors, same-origin
+//         cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+//         credentials: 'same-origin', // include, *same-origin, omit
+//         headers: {
+//             'Content-Type': 'application/json'
+//             // 'Content-Type': 'application/x-www-form-urlencoded',
+//         },
+//         redirect: 'follow', // manual, *follow, error
+//         referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+//         body: JSON.stringify(data) // body data type must match "Content-Type" header
+//     });
+//     return response.json(); // parses JSON response into native JavaScript objects
+// }
 
-    var newlist = {
-        year: listbegin.year,
-        list: []
-    }
-    datelist.unshift(newlist)
+// postData('https://example.com/answer', { answer: 42 })
+//     .then(data => {
+//         console.log(data); // JSON data parsed by `data.json()` call
+//     });
 
-    for (let i = listbegin.daystamp; i <= listend.daystamp; ++i) {
 
-        if (stamp2date(i).year == newlist.year) {
-            newlist.list.push({
-                daystamp: i,
-                year: stamp2date(i).year,
-                month: stamp2date(i).month,
-                day: stamp2date(i).day,
-                week: (i + 3) % 7,
-                value: (i >= begind.daystamp && i <= endd.daystamp) ? Math.floor(Math.random() * 4) : 0
-            })
-        }
-        else {
-            newlist = {
-                year: stamp2date(i).year,
-                list: []
-            }
-            datelist.unshift(newlist)
+async function getdatelist() {
+    var response = await fetch('/src/datepreview.json')
 
-            newlist.list.push({
-                daystamp: i,
-                year: stamp2date(i).year,
-                month: stamp2date(i).month,
-                day: stamp2date(i).day,
-                week: (i + 3) % 7,
-                value: (i >= begind.daystamp && i <= endd.daystamp) ? Math.floor(Math.random() * 4) : 0
-            })
-        }
-
-    }
-    return datelist
+    return response.json()
 
 }
 
@@ -282,28 +196,6 @@ function clearRect() {
     svg.textContent = ''
 }
 
-
-
-// github 的 rect 的 mouseover 事件
-
-// function t(a) {
-//     let b = a.target;
-//     if (!((b instanceof HTMLElement || b instanceof SVGElement) && b.matches("[data-level]"))) return;
-//     s(), o.textContent = b.textContent, o.hidden = !1;
-//     let c = b.getBoundingClientRect(),
-//         d = c.left + window.pageXOffset - o.offsetWidth / 2 + c.width / 2,
-//         e = c.bottom + window.pageYOffset - o.offsetHeight - 2 * c.height,
-//         f = document.querySelector(".js-calendar-graph"),
-//         g = f.getBoundingClientRect();
-//     o.style.top = `${e}px`, u(g, d) ? (
-//         o.style.left = `${w(c)}px`,
-//         o.classList.add("left"),
-//         o.classList.remove("right")
-//     ) : v(g, d) ? (o.style.left = `${x(c)}px`,
-//         o.classList.add("right"), o.classList.remove("left")) : (o.style.left = `${d}px`,
-//             o.classList.remove("left"), o.classList.remove("right")
-//     )
-// }
 
 
 
