@@ -12,25 +12,76 @@
 </head>
 
 <body>
-    <div class="calendar">
-        <div class="border">
-            <div class="inputpannel">
-                <label>
-                </label>
-                <label>date begin:</label>
-                <input id='dateb' type="date" style="margin-right: 30px;" value="2020-01-01">
-                <label style="margin-left: 30px;">date end:</label>
-                <input id='datee' type="date" value="2023-12-31">
-                <button id = 'enter' style="margin-left: 40px;" >确认</button>
-            </div>
-            <div class="rectlist">
-                <svg id="svg">
-                </svg>
+    <div class="mt">
+        <div class="calendar">
+            <div class="border">
+                <div class="inputpannel">
+                    <label>
+                    </label>
+                    <label>date begin:</label>
+                    <input id='dateb' type="date" style="margin-right: 30px;" value="2020-01-01">
+                    <label style="margin-left: 30px;">date end:</label>
+                    <input id='datee' type="date" value="2023-12-31">
+                    <button id='enter' style="margin-left: 40px;">确认</button>
+                </div>
+                <div class="rectlist">
+                    <svg id="calsvg">
+                    </svg>
+                    <div style="width: 100%; font-size: 14px;">
+                        <div style="float:right;" aria-hidden="true">
+                            Less
+                            <svg width="10" height="10" style="display: inline-block" class="d-inline-block">
+                                <rect width="10" height="10" class="ContributionCalendar-day" data-level="0" rx="2"
+                                    ry="2">
+                                </rect>
+                            </svg>
+                            <svg width="10" height="10" style="display: inline-block" class="d-inline-block">
+                                <rect width="10" height="10" style="display: inline-block"
+                                    class="ContributionCalendar-day" data-level="1" rx="2" ry="2"></rect>
+                            </svg>
+                            <svg width="10" height="10" class="d-inline-block">
+                                <rect width="10" height="10" class="ContributionCalendar-day" data-level="2" rx="2"
+                                    ry="2">
+                                </rect>
+                            </svg>
+                            <svg width="10" height="10" style="display: inline-block" class="d-inline-block">
+                                <rect width="10" height="10" class="ContributionCalendar-day" data-level="3" rx="2"
+                                    ry="2">
+                                </rect>
+                            </svg>
+                            <svg width="10" height="10" style="display: inline-block" class="d-inline-block">
+                                <rect width="10" height="10" class="ContributionCalendar-day" data-level="4" rx="2"
+                                    ry="2">
+                                </rect>
+                            </svg>
+                            More
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+        <div class="content">
+            <div class="border">
+                <div style="float: right; width: 16%; text-align: left;">
+                    <ul id="yearlist" class="yearlist">
+                        <li>
+                            <a class="year-item" id="year-link-2023">2023</a>
+                        </li>
+                        <li>
+                            <a class="year-item" id="year-link-2022">2022</a>
+                        </li>
+                        <li>
+                            <a class="year-item" id="year-link-2021">2021</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
     </div>
-    <div  class="svg-tip" hidden="" style="pointer-events: none;"  >
-          
+    <div class="svg-tip" hidden="" style="pointer-events: none;">
+
     </div>
 
 </body>

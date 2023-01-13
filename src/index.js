@@ -3,7 +3,7 @@ import { date2stamp, stamp2date } from "./date2stamp.js";
 
 var dateb = document.getElementById('dateb')
 var datee = document.getElementById('datee')
-var svg = document.getElementById('svg')
+var svg = document.getElementById('calsvg')
 
 var datebegin = dateb.valueAsNumber
 var dateend = datee.valueAsNumber
@@ -13,7 +13,7 @@ if (dateend <= datebegin || !datebegin) {
     dateb.valueAsNumber = dateend - 1000 * 3600 * 10 * 24
 }
 
-let datelist = getdatelist(
+var datelist = getdatelist(
     {
         value: dateb.value,
         valueAsNumber: dateb.valueAsNumber
@@ -24,8 +24,40 @@ let datelist = getdatelist(
         valueAsNumber: datee.valueAsNumber
 
     })
+// 生成年份列表
 
-initRect(datelist)
+document.getElementById('yearlist').textContent = ''
+
+for (let i = 0; i < datelist.length; ++i) {
+    var li = document.createElement('li')
+    var a = document.createElement('a')
+    a.setAttribute("class", "year-item")
+    a.class = "year-item"
+    a.id = "year-link-2023"
+    a.yindex =  i
+    a.textContent = datelist[i].year
+    a.onclick = function () {
+        let items = document.getElementsByClassName('year-item')
+
+        for (let i = 0; i < items.length; ++i) {
+            // console.log(items[0])
+            items[i].style = "background-color: #FFFFFF;"
+        }
+
+        this.style = "background-color: #0969da;"
+        clearRect()
+        initRect(datelist[this.yindex])
+    }
+ 
+    li.appendChild(a)
+    document.getElementById('yearlist').appendChild(li)
+}
+
+
+document.getElementsByClassName('year-item')[0].style = "background-color: #0969da;"
+
+initRect(datelist[0])
+
 
 var refresh = function () {
     let datebegin = dateb.valueAsNumber
@@ -35,7 +67,7 @@ var refresh = function () {
         dateb.valueAsNumber = dateend - 1000 * 3600 * 10 * 24
     }
 
-    var datelist = getdatelist(
+    datelist = getdatelist(
         {
             value: dateb.value,
             valueAsNumber: dateb.valueAsNumber
@@ -46,8 +78,35 @@ var refresh = function () {
             valueAsNumber: datee.valueAsNumber
 
         })
+    document.getElementById('yearlist').textContent = ''
+
+    for (let i = 0; i < datelist.length; ++i) {
+        var li = document.createElement('li')
+        var a = document.createElement('a')
+        a.setAttribute("class", "year-item")
+        a.class = "year-item"
+        a.id = "year-link-2023"
+        a.yindex =  i
+        a.textContent = datelist[i].year
+        a.onclick = function () {
+
+            let items = document.getElementsByClassName('year-item')
+
+            for (let i = 0; i < items.length; ++i) {
+                // console.log(items[0])
+                items[i].style = "background-color: #FFFFFF;"
+            }
+
+            this.style = "background-color: #0969da;"
+            clearRect()
+            initRect(datelist[this.yindex])
+
+        }
+        li.appendChild(a)
+        document.getElementById('yearlist').appendChild(li)
+    }
     clearRect()
-    initRect(datelist)
+    initRect(datelist[0])
 
 }
 
@@ -55,7 +114,7 @@ document.getElementById('enter').addEventListener('click', refresh)
 
 function getdatelist(begin, end) {
 
-    // console.log(begin,end)
+    console.log(begin,end)
     let begind = {
         daystamp: begin.valueAsNumber / 1000 / 3600 / 24 + 1,
         year: parseInt(begin.value.split('-')[0]),
@@ -129,7 +188,7 @@ function getdatelist(begin, end) {
 
 
 
-function initRect(datelist) {
+function initRect(dalist) {
 
     var g1 = document.createElementNS('http://www.w3.org/2000/svg', 'g')
     g1.setAttribute("transform", `translate(15, 20)`)
@@ -155,15 +214,15 @@ function initRect(datelist) {
     var wlabel5 = document.createElementNS('http://www.w3.org/2000/svg', 'text')
     wlabel5.setAttribute("class", "ContributionCalendar-label")
     wlabel5.setAttribute("dx", -15)
-    wlabel5.setAttribute("dy",  84)
+    wlabel5.setAttribute("dy", 84)
     wlabel5.textContent = 'Fri'
     g1.appendChild(wlabel5)
 
-    for (let i = 0; i < datelist[0].list.length;) {
+    for (let i = 0; i < dalist.list.length;) {
         var g = document.createElementNS('http://www.w3.org/2000/svg', 'g')
 
         g.setAttribute("transform", `translate(${posi}, 0)`)
-        if (mnum != datelist[0].list[i].month) {
+        if (mnum != dalist.list[i].month) {
             mnum += 1
             var mlabel = document.createElementNS('http://www.w3.org/2000/svg', 'text')
             mlabel.setAttribute("class", "ContributionCalendar-label")
@@ -173,7 +232,7 @@ function initRect(datelist) {
             g1.appendChild(mlabel)
         }
 
-        for (let j = datelist[0].list[i].week; j < 7 && i < datelist[0].list.length; ++j, ++i) {
+        for (let j = dalist.list[i].week; j < 7 && i < dalist.list.length; ++j, ++i) {
 
             var r1 = document.createElementNS('http://www.w3.org/2000/svg', 'rect')
             r1.setAttribute("width", 11)
@@ -183,14 +242,14 @@ function initRect(datelist) {
             r1.setAttribute("rx", 2)
             r1.setAttribute("ry", 2)
             r1.setAttribute("class", "ContributionCalendar-day rect")
-            r1.setAttribute("data-level", `${datelist[0].list[i].value}`)
+            r1.setAttribute("data-level", `${dalist.list[i].value}`)
             r1.setAttribute("data-descr", 'asdasd')
             r1.onmouseover = showtip
             r1.onmouseout = function () {
                 let tip = document.getElementsByClassName('svg-tip')
                 tip[0].hidden = "true"
             }
-            r1.textContent = `${datelist[0].list[i].year}年 ${datelist[0].list[i].month}月 ${datelist[0].list[i].day}日 ${datelist[0].list[i].value}`
+            r1.textContent = `${dalist.list[i].year}年 ${dalist.list[i].month}月 ${dalist.list[i].day}日 ${dalist.list[i].value}`
             g.appendChild(r1)
 
         }
