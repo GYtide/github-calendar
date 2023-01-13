@@ -102,6 +102,7 @@ async function getdatelist() {
 
 
 
+
 function initRect(dalist) {
 
     var g1 = document.createElementNS('http://www.w3.org/2000/svg', 'g')
@@ -162,6 +163,16 @@ function initRect(dalist) {
             r1.onmouseout = function () {
                 let tip = document.getElementsByClassName('svg-tip')
                 tip[0].hidden = "true"
+            }
+            r1.onclick = function(){
+                // 显示该天的信息
+                
+                // console.log(dalist.list[i])
+                var tbody = document.createElement('tbody')
+
+                document.getElementById('jsonview').appendChild(tbody)
+                
+
             }
             r1.textContent = `${dalist.list[i].year}年 ${dalist.list[i].month}月 ${dalist.list[i].day}日 ${dalist.list[i].value}`
             g.appendChild(r1)
