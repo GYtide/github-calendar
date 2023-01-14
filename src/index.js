@@ -138,7 +138,7 @@ function initRect(dalist) {
 
         g.setAttribute("transform", `translate(${posi}, 0)`)
         if (mnum != dalist.list[i].month) {
-            mnum += 1
+            mnum = dalist.list[i].month
             var mlabel = document.createElementNS('http://www.w3.org/2000/svg', 'text')
             mlabel.setAttribute("class", "ContributionCalendar-label")
             mlabel.setAttribute("x", `${posi + 16}`)
